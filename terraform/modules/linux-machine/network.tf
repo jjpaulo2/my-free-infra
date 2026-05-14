@@ -5,11 +5,14 @@ resource "oci_core_network_security_group" "this" {
 }
 
 resource "oci_core_network_security_group_security_rule" "ingress_tcp" {
-  for_each = toset(var.ingress_tcp_rules)
+  for_each = zipmap(
+    range(length(var.ingress_tcp_rules)),
+    var.ingress_tcp_rules
+  )
 
   network_security_group_id = oci_core_network_security_group.this.id
   direction                 = "INGRESS"
-  protocol                  = "TCP"
+  protocol                  = "6"
   source                    = each.value.cidr
   source_type               = "CIDR_BLOCK"
 
@@ -22,11 +25,14 @@ resource "oci_core_network_security_group_security_rule" "ingress_tcp" {
 }
 
 resource "oci_core_network_security_group_security_rule" "ingress_udp" {
-  for_each = toset(var.ingress_udp_rules)
+  for_each = zipmap(
+    range(length(var.ingress_udp_rules)),
+    var.ingress_udp_rules
+  )
 
   network_security_group_id = oci_core_network_security_group.this.id
   direction                 = "INGRESS"
-  protocol                  = "UDP"
+  protocol                  = "17"
   source                    = each.value.cidr
   source_type               = "CIDR_BLOCK"
 
@@ -43,7 +49,7 @@ resource "oci_core_network_security_group_security_rule" "ingress_icmp" {
 
   network_security_group_id = oci_core_network_security_group.this.id
   direction                 = "INGRESS"
-  protocol                  = "ICMP"
+  protocol                  = "1"
   source                    = "0.0.0.0/0"
   source_type               = "CIDR_BLOCK"
 }

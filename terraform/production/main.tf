@@ -5,6 +5,10 @@ locals {
   }
 }
 
+data "http" "my_ip" {
+  url = "https://api.ipify.org"
+}
+
 module "network" {
   source = "../modules/virtual-network"
 
@@ -22,6 +26,13 @@ module "node_0" {
   subnet_id        = module.network.subnet_id
   vcn_id           = module.network.vcn_id
   assign_public_ip = true
+
+  ingress_tcp_rules = [
+    {
+      port = "22"
+      cidr = "${data.http.my_ip.response_body}/32"
+    }
+  ]
 }
 
 module "node_1" {
@@ -33,4 +44,11 @@ module "node_1" {
   subnet_id        = module.network.subnet_id
   vcn_id           = module.network.vcn_id
   assign_public_ip = true
+
+  ingress_tcp_rules = [
+    {
+      port = "22"
+      cidr = "${data.http.my_ip.response_body}/32"
+    }
+  ]
 }
