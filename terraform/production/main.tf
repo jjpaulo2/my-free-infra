@@ -23,3 +23,14 @@ module "node_0" {
   vcn_id           = module.network.vcn_id
   assign_public_ip = true
 }
+
+module "node_1" {
+  source = "../modules/linux-machine"
+
+  display_name     = "cluster-node-1"
+  os               = local.os
+  compartment_id   = var.compartment_id
+  subnet_id        = module.network.subnet_id
+  vcn_id           = module.network.vcn_id
+  assign_public_ip = true
+}
