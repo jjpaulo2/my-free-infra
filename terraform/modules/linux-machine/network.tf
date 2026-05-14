@@ -1,0 +1,57 @@
+resource "oci_core_network_security_group" "this" {
+  compartment_id = var.compartment_id
+  vcn_id         = var.vcn_id
+  display_name   = var.display_name
+}
+
+resource "oci_core_network_security_group_security_rule" "ingress_tcp" {
+  for_each = toset(var.ingress_tcp_rules)
+
+  network_security_group_id = oci_core_network_security_group.this.id
+  direction                 = "INGRESS"
+  protocol                  = "TCP"
+  source                    = each.value.cidr
+  source_type               = "CIDR_BLOCK"
+
+  tcp_options {
+    destination_port_range {
+      min = each.value.port
+      max = each.value.port
+    }
+  }
+}
+
+resource "oci_core_network_security_group_security_rule" "ingress_udp" {
+  for_each = toset(var.ingress_udp_rules)
+
+  network_security_group_id = oci_core_network_security_group.this.id
+  direction                 = "INGRESS"
+  protocol                  = "UDP"
+  source                    = each.value.cidr
+  source_type               = "CIDR_BLOCK"
+
+  udp_options {
+    destination_port_range {
+      min = each.value.port
+      max = each.value.port
+    }
+  }
+}
+
+resource "oci_core_network_security_group_security_rule" "ingress_icmp" {
+  count = var.allow_icmp ? 1 : 0
+
+  network_security_group_id = oci_core_network_security_group.this.id
+  direction                 = "INGRESS"
+  protocol                  = "ICMP"
+  source                    = "0.0.0.0/0"
+  source_type               = "CIDR_BLOCK"
+}
+
+resource "oci_core_network_security_group_security_rule" "egress_all" {
+  network_security_group_id = oci_core_network_security_group.this.id
+  direction                 = "EGRESS"
+  protocol                  = "all"
+  destination               = "0.0.0.0/0"
+  destination_type          = "CIDR_BLOCK"
+}
