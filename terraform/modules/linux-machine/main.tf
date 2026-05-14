@@ -12,9 +12,14 @@ data "oci_core_images" "this" {
   state                    = "AVAILABLE"
 }
 
+data "oci_identity_availability_domain" "this" {
+  compartment_id = var.compartment_id
+  ad_number = 1
+}
+
 resource "oci_core_instance" "this" {
   compartment_id      = var.compartment_id
-  availability_domain = var.availability_domain
+  availability_domain = data.oci_identity_availability_domain.this.name
   display_name        = var.display_name
   shape               = var.shape
 

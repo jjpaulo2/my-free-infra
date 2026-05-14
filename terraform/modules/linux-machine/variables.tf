@@ -3,12 +3,6 @@ variable "compartment_id" {
   type        = string
 }
 
-variable "availability_domain" {
-  description = "Availability domain onde a VM será criada"
-  type        = string
-  default     = "AD-1"
-}
-
 variable "display_name" {
   description = "Nome de exibição da VM"
   type        = string
