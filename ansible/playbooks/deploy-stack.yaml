@@ -21,11 +21,3 @@
         recreate: always
         env_files:
           - "{{ ansible_facts['env']['HOME'] }}/stacks/{{ stack }}/.env"
-    
-    - name: Prune unused Docker resources
-      community.docker.docker_prune:
-        containers: true
-        images: true
-        networks: true
-        volumes: true
-        builder_cache: true
