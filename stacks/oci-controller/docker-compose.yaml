@@ -11,7 +11,10 @@ services:
     environment:
       VM_node_heavy_0: ${VM_node_heavy_0}
     entrypoint: null
-    command: |
-      chmod +x /usr/local/bin/*
-      sleep infinity
+    command:
+      - sh
+      - -c
+      - |
+        chmod +x /usr/local/bin/*
+        sleep infinity
   
