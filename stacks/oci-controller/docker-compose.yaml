@@ -10,11 +10,8 @@ services:
       - ./scripts/turn-on-machine.sh:/usr/local/bin/turn-on-machine
     environment:
       VM_node_heavy_0: ${VM_node_heavy_0}
-    entrypoint: null
-    command:
-      - sh
-      - -c
-      - |
-        chmod +x /usr/local/bin/*
-        sleep infinity
+    entrypoint: echo "Running..." &&
+    command: |
+      chmod +x /usr/local/bin/*
+      sleep infinity
   
