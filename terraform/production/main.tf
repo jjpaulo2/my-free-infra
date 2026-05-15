@@ -81,3 +81,20 @@ module "node_heavy_0" {
     }
   ]
 }
+
+resource "oci_identity_dynamic_group" "managers" {
+  compartment_id = var.compartment_id
+  name           = "cluster-managers"
+  description    = "Machines that can manage the cluster"
+  matching_rule = "Any {instance.id = '${module.node_0.instance_id}'}"
+}
+
+resource "oci_identity_policy" "managers" {
+  compartment_id = var.compartment_id
+  name           = "cluster-managers"
+  description    = "Allow manager dynamic group to manage the whole cluster"
+
+  statements = [
+    "Allow dynamic-group ${oci_identity_dynamic_group.managers.name} to manage instance-family in compartment id ${var.compartment_id}",
+  ]
+}
