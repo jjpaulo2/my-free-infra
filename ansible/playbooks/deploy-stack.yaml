@@ -1,0 +1,24 @@
+---
+- name: Deploy Docker Compose Stack
+  hosts: all
+  become: false
+
+  vars_prompt:
+    - name: stack
+      prompt: Stack name
+      private: false
+
+  tasks:
+    - name: Copy Stack files
+      ansible.builtin.copy:
+        src: "../../stacks/{{ stack }}"
+        dest: "{{ ansible_facts['env']['HOME'] }}/stacks"
+        mode: 0755
+
+    - name: Deploy stack
+      community.docker.docker_compose_v2:
+        project_src: "{{ ansible_facts['env']['HOME'] }}/stacks/{{ stack }}"
+        state: present
+        recreate: always
+        env_files:
+          - "{{ ansible_facts['env']['HOME'] }}/stacks/{{ stack }}/.env"

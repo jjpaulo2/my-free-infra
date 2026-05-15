@@ -1,4 +1,3 @@
----
 - name: Update Debian-based system
   hosts: all
   become: true

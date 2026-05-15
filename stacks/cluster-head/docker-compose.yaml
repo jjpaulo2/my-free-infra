@@ -1,0 +1,25 @@
+services:
+
+  portainer:
+    image: portainer/portainer-ce:lts
+    pull_policy: always
+    restart: unless-stopped
+    volumes:
+      - portainer_data:/data
+  
+  caddy:
+    image: caddy:alpine
+    pull_policy: always
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./config/Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+    environment:
+      DOMAIN: ${DOMAIN}
+  
+volumes:
+  caddy_data:
+  portainer_data:

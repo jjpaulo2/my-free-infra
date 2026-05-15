@@ -1,10 +1,3 @@
-locals {
-  os = {
-    name    = "Canonical Ubuntu"
-    version = "24.04 Minimal"
-  }
-}
-
 data "http" "my_ip" {
   url = "https://api.ipify.org"
 }
@@ -21,7 +14,6 @@ module "node_0" {
   source = "../modules/linux-machine"
 
   display_name     = "cluster-node-0"
-  os               = local.os
   compartment_id   = var.compartment_id
   subnet_id        = module.network.subnet_id
   vcn_id           = module.network.vcn_id
@@ -31,6 +23,14 @@ module "node_0" {
     {
       port = "22"
       cidr = "${data.http.my_ip.response_body}/32"
+    },
+    {
+      port = "80"
+      cidr = "0.0.0.0/0"
+    },
+    {
+      port = "443"
+      cidr = "0.0.0.0/0"
     }
   ]
 }
@@ -39,7 +39,6 @@ module "node_1" {
   source = "../modules/linux-machine"
 
   display_name     = "cluster-node-1"
-  os               = local.os
   compartment_id   = var.compartment_id
   subnet_id        = module.network.subnet_id
   vcn_id           = module.network.vcn_id

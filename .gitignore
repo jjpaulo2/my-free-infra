@@ -48,6 +48,9 @@ terraform.rc
 # Retry files generated for failed Ansible playbook runs
 *.retry
 
+# Environemtn
+.env
+
 # Project
 ansible/ssh
 ansible/inventory
