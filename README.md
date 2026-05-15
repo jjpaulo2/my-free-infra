@@ -4,19 +4,29 @@ A fully automated 3-node cluster on Oracle Cloud Infrastructure (OCI) Free Tier,
 
 ## Architecture
 
-```
-┌────────────────────────────────────────────────────────────────┐
-│                  cluster-network VCN (10.0.0.0/16)             │
-│                                                                │
-│  ┌───────────────────┐  ┌──────────────────┐  ┌─────────────┐  │
-│  │  node_0 (HEAD)    │  │  node_1 (WORKER) │  │ node_heavy_0│  │
-│  │  VM.Standard.     │  │  VM.Standard.    │  │ VM.Standard.│  │
-│  │  E2.1.Micro       │  │  E2.1.Micro      │  │ E2.4        │  │
-│  │                   │  │                  │  │             │  │
-│  │  - Portainer CE   │  │  - Portainer     │  │ - Portainer │  │
-│  │  - Caddy (HTTPS)  │  │    Agent         │  │   Agent     │  │
-│  └───────────────────┘  └──────────────────┘  └─────────────┘  │
-└────────────────────────────────────────────────────────────────┘
+```mermaid
+graph LR
+    Internet(("Internet"))
+
+    subgraph VCN["cluster-network VCN · 10.0.0.0/16"]
+        subgraph node0["node_0 — HEAD"]
+            caddy["Caddy\n:80 / :443"]
+            portainer_ce["Portainer CE\n:9000"]
+        end
+
+        subgraph node1["node_1 — WORKER"]
+            agent1["Portainer Agent\n:9001"]
+        end
+
+        subgraph nodeheavy["node_heavy_0 — WORKER"]
+            agent2["Portainer Agent\n:9001"]
+        end
+
+        portainer_ce -->|"manages"| agent1
+        portainer_ce -->|"manages"| agent2
+    end
+
+    Internet -->|":80 / :443"| caddy
 ```
 
 **Stack:**
