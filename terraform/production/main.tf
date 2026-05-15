@@ -50,8 +50,34 @@ module "node_1" {
       cidr = "${data.http.my_ip.response_body}/32"
     },
     {
-      port = "9001"
+      port = "9001" # Portainer Agent
       cidr = "${module.node_0.private_ip}/32"
+    }
+  ]
+}
+
+module "node_heavy_0" {
+  source = "../modules/linux-machine"
+
+  display_name     = "cluster-node-heavy-0"
+  shape            = "VM.Standard.E2.4"
+  compartment_id   = var.compartment_id
+  subnet_id        = module.network.subnet_id
+  vcn_id           = module.network.vcn_id
+  assign_public_ip = true
+
+  ingress_tcp_rules = [
+    {
+      port = "22"
+      cidr = "${data.http.my_ip.response_body}/32"
+    },
+    {
+      port = "9001" # Portainer Agent
+      cidr = "${module.node_0.private_ip}/32"
+    },
+    {
+      port = "25565" # Minecraft
+      cidr = "0.0.0.0/0"
     }
   ]
 }
