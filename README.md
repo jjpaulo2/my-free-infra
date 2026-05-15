@@ -245,7 +245,7 @@ cd ansible
 ansible-playbook -i inventory/head playbooks/deploy-stack.yaml -e stack=cluster-head
 
 # Worker nodes
-ansible-playbook -i inventory/node ansible/playbooks/deploy-stack.yaml -e stack=cluster-node
+ansible-playbook -i inventory/node playbooks/deploy-stack.yaml -e stack=cluster-node
 ```
 
 ---
