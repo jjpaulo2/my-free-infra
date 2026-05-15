@@ -19,5 +19,6 @@
         project_src: "{{ ansible_facts['env']['HOME'] }}/stacks/{{ stack }}"
         state: present
         recreate: always
+        remove_orphans: true
         env_files:
           - "{{ ansible_facts['env']['HOME'] }}/stacks/{{ stack }}/.env"

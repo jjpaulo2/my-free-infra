@@ -1,0 +1,14 @@
+services:
+
+  oci:
+    image: ghcr.io/oracle/oci-cli:latest
+    pull_policy: always
+    restart: unless-stopped
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./scripts/turn-off-machine.sh:/usr/local/bin/turn-off-machine
+      - ./scripts/turn-on-machine.sh:/usr/local/bin/turn-on-machine
+    command: |
+      chmod +x /usr/local/bin/*
+      sleep infinity
+  
