@@ -14,7 +14,7 @@ data "oci_core_images" "this" {
 
 data "oci_identity_availability_domain" "this" {
   compartment_id = var.compartment_id
-  ad_number = 1
+  ad_number      = 1
 }
 
 resource "oci_core_instance" "this" {

@@ -2,10 +2,10 @@
     redir https://admin.{$DOMAIN}
 }
 
-admin.{$DOMAIN} {
-    reverse_proxy http://portainer:9000
+monitoring.{$DOMAIN} {
+    redir https://admin.{$DOMAIN}
 }
 
-monitoring.{$DOMAIN} {
+admin.{$DOMAIN} {
     reverse_proxy http://portainer:9000
 }

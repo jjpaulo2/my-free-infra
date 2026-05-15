@@ -5,21 +5,23 @@ services:
     pull_policy: always
     restart: unless-stopped
     volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
   
   caddy:
-    image: caddy:alpine
+    image: caddy:2.11-alpine
     pull_policy: always
     restart: unless-stopped
     ports:
       - 80:80
       - 443:443
     volumes:
-      - ./config/Caddyfile:/etc/caddy/Caddyfile
+      - ./config/caddy/Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data
     environment:
       DOMAIN: ${DOMAIN}
   
 volumes:
-  caddy_data:
   portainer_data:
+  caddy_data:

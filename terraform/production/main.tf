@@ -48,6 +48,10 @@ module "node_1" {
     {
       port = "22"
       cidr = "${data.http.my_ip.response_body}/32"
+    },
+    {
+      port = "9001"
+      cidr = "${module.node_0.private_ip}/32"
     }
   ]
 }
