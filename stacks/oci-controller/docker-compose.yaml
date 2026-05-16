@@ -6,9 +6,10 @@ services:
     restart: unless-stopped
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - oci_scripts:/usr/local/bin
+      - ./scripts/turn-on-machine.sh:/usr/local/bin/turn-on-machine
+      - ./scripts/turn-off-machine.sh:/usr/local/bin/turn-off-machine
     environment:
-      VM_node_heavy_0: ${VM_node_heavy_0}
+      VM_cluster_node_heavy_0: ${VM_cluster_node_heavy_0}
     entrypoint: sleep infinity
   
 volumes:
