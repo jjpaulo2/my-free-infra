@@ -1,7 +1,7 @@
 services:
 
   portainer:
-    image: portainer/portainer-ce:lts
+    image: portainer/portainer-ee:lts
     pull_policy: always
     restart: unless-stopped
     volumes:
