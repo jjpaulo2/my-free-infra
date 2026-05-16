@@ -1,16 +1,39 @@
 services:
 
-  oci:
+  turn-on-cluster-heavy-node-0:
     image: ghcr.io/oracle/oci-cli:latest
+    container_name: turn-on-cluster-heavy-node-0
     pull_policy: always
-    restart: unless-stopped
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - ./scripts/turn-on-machine.sh:/usr/local/bin/turn-on-machine
-      - ./scripts/turn-off-machine.sh:/usr/local/bin/turn-off-machine
+    restart: never
     environment:
-      VM_cluster_node_heavy_0: ${VM_cluster_node_heavy_0}
-    entrypoint: sleep infinity
+      MACHINE_OCID: ${MACHINE_OCID}
+    entrypoint:
+      - oci
+      - compute
+      - instance
+      - action
+      - --instance-id
+      - $MACHINE_OCID
+      - --action
+      - START
+      - --auth
+      - instance_principal
   
-volumes:
-  oci_scripts:
+  turn-off-cluster-heavy-node-0:
+    image: ghcr.io/oracle/oci-cli:latest
+    container_name: turn-off-cluster-heavy-node-0
+    pull_policy: always
+    restart: never
+    environment:
+      MACHINE_OCID: ${MACHINE_OCID}
+    entrypoint:
+      - oci
+      - compute
+      - instance
+      - action
+      - --instance-id
+      - $MACHINE_OCID
+      - --action
+      - SOFTSTOP
+      - --auth
+      - instance_principal
