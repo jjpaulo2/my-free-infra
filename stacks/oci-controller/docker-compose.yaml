@@ -4,7 +4,7 @@ services:
     image: ghcr.io/oracle/oci-cli:latest
     container_name: turn-on-cluster-heavy-node-0
     pull_policy: always
-    restart: never
+    restart: no
     environment:
       MACHINE_OCID: ${MACHINE_OCID}
     entrypoint:
@@ -23,7 +23,7 @@ services:
     image: ghcr.io/oracle/oci-cli:latest
     container_name: turn-off-cluster-heavy-node-0
     pull_policy: always
-    restart: never
+    restart: no
     environment:
       MACHINE_OCID: ${MACHINE_OCID}
     entrypoint:
