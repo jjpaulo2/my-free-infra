@@ -12,6 +12,7 @@ services:
       CONTAINER_ID: ${CONTAINER_ID}
     entrypoint:
       - curl
+      - -L
       - -H
       - "X-API-Key: ${PORTAINER_API_KEY}"
       - -X
