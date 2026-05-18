@@ -17,3 +17,4 @@ services:
       - -X
       - POST
       - "http://${PORTAINER_HOST}/api/endpoints/${ENDPOINT_ID}/docker/containers/${CONTAINER_ID}/start"
+      - -vvv
