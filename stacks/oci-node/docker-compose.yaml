@@ -10,7 +10,7 @@ services:
       PORTAINER_HOST: ${PORTAINER_HOST}
       ENDPOINT_ID: ${ENDPOINT_ID}
       CONTAINER_ID: ${CONTAINER_ID}
-    entrypoint:
+    command:
       - curl
       - -L
       - -H
