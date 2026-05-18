@@ -16,4 +16,4 @@ services:
       - "X-API-Key: ${PORTAINER_API_KEY}"
       - -X
       - POST
-      - "http://${PORTAINER_HOST}:9000/api/endpoints/${ENDPOINT_ID}/docker/containers/${CONTAINER_ID}/start"
+      - "http://${PORTAINER_HOST}/api/endpoints/${ENDPOINT_ID}/docker/containers/${CONTAINER_ID}/start"
