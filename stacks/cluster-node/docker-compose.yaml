@@ -1,7 +1,7 @@
 services:
 
   portainer_agent:
-    image: portainer/agent:lts
+    image: portainer/agent:sts
     pull_policy: always
     restart: unless-stopped
     ports:

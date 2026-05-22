@@ -1,7 +1,7 @@
 services:
 
   portainer:
-    image: portainer/portainer-ee:lts
+    image: portainer/portainer-ee:sts
     pull_policy: always
     restart: unless-stopped
     volumes:
@@ -11,7 +11,7 @@ services:
       DOCKER_BUILDKIT: 0
   
   portainer_agent:
-    image: portainer/agent:lts
+    image: portainer/agent:sts
     pull_policy: always
     restart: unless-stopped
     volumes:
