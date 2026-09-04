@@ -80,13 +80,24 @@ module "node_heavy_0" {
       cidr = "0.0.0.0/0"
     }
   ]
+
+  ingress_udp_rules = [
+    {
+      port = "2456" # Valheim
+      cidr = "0.0.0.0/0"
+    },
+    {
+      port = "2457" # Valheim
+      cidr = "0.0.0.0/0"
+    }
+  ]
 }
 
 resource "oci_identity_dynamic_group" "managers" {
   compartment_id = var.compartment_id
   name           = "cluster-managers"
   description    = "Machines that can manage the cluster"
-  matching_rule = "Any {instance.id = '${module.node_0.instance_id}'}"
+  matching_rule  = "Any {instance.id = '${module.node_0.instance_id}'}"
 }
 
 resource "oci_identity_policy" "managers" {
